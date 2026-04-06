@@ -21,6 +21,7 @@ export const createOrderSchema = z.object({
   specialInstructions: z.string().max(500).optional(),
   preferredDeliveryDate: z.string().datetime().optional(),
   currency: z.enum(['CAD', 'USD', 'GBP']),
+  buyerProvince: z.string().max(2).optional(), // Canadian province code (ON, BC, QC, etc.)
 }).refine(data => data.bundleId || (data.items && data.items.length > 0), {
   message: 'Order must include either a bundle or at least one custom item',
 });
@@ -39,6 +40,22 @@ export const paginationSchema = z.object({
   limit: z.coerce.number().int().positive().max(100).default(20),
 });
 
+export const customOrderSchema = z.object({
+  occasionType: z.string().min(2).max(100),
+  giftType: z.enum(['EXPERIENCE', 'PHYSICAL']),
+  preferredDate: z.string().datetime().optional(),
+  estimatedBudget: z.number().positive().optional(),
+  currency: z.enum(['CAD', 'USD', 'GBP']),
+  description: z.string().min(10).max(1000),
+  recipientName: z.string().min(2).max(100),
+  recipientPhone: z.string().min(7).max(20),
+  deliveryCity: z.string().min(2),
+  deliveryState: z.string().min(2),
+  personalMessage: z.string().max(500).optional(),
+  specialInstructions: z.string().max(500).optional(),
+});
+
 export type CreateOrderInput = z.infer<typeof createOrderSchema>;
 export type UpdateOrderStatusInput = z.infer<typeof updateOrderStatusSchema>;
 export type PaginationInput = z.infer<typeof paginationSchema>;
+export type CustomOrderInput = z.infer<typeof customOrderSchema>;

@@ -1,6 +1,6 @@
 {
   "name": "@celebrate4me/shared",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Shared types, schemas, and utilities for CelebrateForMe",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
