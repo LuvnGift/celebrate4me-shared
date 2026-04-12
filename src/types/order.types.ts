@@ -28,6 +28,8 @@ export interface Order {
   tax: number;
   total: number;
   currency: Currency;
+  /** Exchange rate to CAD at the time the order was created (1.0 for CAD orders) */
+  cadExchangeRate: number;
   adminNotes?: string;
   isFlagged: boolean;
   invoiceUrl?: string;

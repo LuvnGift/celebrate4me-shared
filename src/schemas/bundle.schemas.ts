@@ -2,36 +2,73 @@ import { z } from 'zod';
 
 export const createBundleSchema = z.object({
   occasionId: z.string().cuid(),
-  name: z.string().min(3).max(100),
-  description: z.string().min(10).max(2000),
-  price: z.number().int().positive(),
+  name: z
+    .string()
+    .trim()
+    .min(3, 'Bundle name must be at least 3 characters')
+    .max(100, 'Bundle name must be at most 100 characters'),
+  description: z
+    .string()
+    .trim()
+    .min(10, 'Description must be at least 10 characters')
+    .max(2000, 'Description must be at most 2000 characters'),
+  price: z.number().int().positive('Price must be a positive integer (in smallest currency unit)'),
   currency: z.enum(['CAD', 'USD', 'GBP']),
-  estimatedDeliveryDays: z.number().int().positive().max(30),
-  images: z.array(z.string().url()).min(1).max(10),
+  estimatedDeliveryDays: z
+    .number()
+    .int()
+    .positive()
+    .max(30, 'Estimated delivery cannot exceed 30 days'),
+  images: z.array(z.string().url('Each image must be a valid URL')).min(1).max(10),
   items: z.array(z.object({
-    name: z.string().min(2).max(100),
-    description: z.string().max(500).optional(),
-    quantity: z.number().int().positive(),
-  })).min(1),
+    name: z
+      .string()
+      .trim()
+      .min(2, 'Item name must be at least 2 characters')
+      .max(100),
+    description: z.string().trim().max(500).optional(),
+    quantity: z.number().int().positive('Quantity must be a positive integer'),
+  })).min(1, 'At least one item is required'),
 });
 
 export const updateBundleSchema = createBundleSchema.partial();
 
 export const createOccasionSchema = z.object({
-  name: z.string().min(2).max(100),
-  description: z.string().min(10).max(1000),
-  image: z.string().url().optional(),
+  name: z
+    .string()
+    .trim()
+    .min(2, 'Occasion name must be at least 2 characters')
+    .max(100)
+    .regex(
+      /^[a-zA-ZÀ-ÖØ-öø-ÿ0-9'\-\s&]+$/,
+      'Occasion name contains invalid characters',
+    ),
+  description: z
+    .string()
+    .trim()
+    .min(10, 'Description must be at least 10 characters')
+    .max(1000),
+  image: z.string().url('Must be a valid URL').optional(),
 });
 
 export const updateOccasionSchema = createOccasionSchema.partial();
 
 export const createCustomItemSchema = z.object({
-  name: z.string().min(2).max(100),
-  description: z.string().max(500).optional(),
-  price: z.number().int().positive(),
+  name: z
+    .string()
+    .trim()
+    .min(2, 'Item name must be at least 2 characters')
+    .max(100),
+  description: z.string().trim().max(500).optional(),
+  price: z.number().int().positive('Price must be a positive integer (in smallest currency unit)'),
   currency: z.enum(['CAD', 'USD', 'GBP']),
-  category: z.string().min(2).max(50),
-  stock: z.number().int().min(0),
+  category: z
+    .string()
+    .trim()
+    .min(2, 'Category is required')
+    .max(50)
+    .regex(/^[a-zA-Z0-9\s\-&]+$/, 'Category contains invalid characters'),
+  stock: z.number().int().min(0, 'Stock cannot be negative'),
 });
 
 export const updateCustomItemSchema = createCustomItemSchema.partial();

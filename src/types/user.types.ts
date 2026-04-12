@@ -4,12 +4,25 @@ export interface User {
   id: string;
   username: string;
   email: string;
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: Date;
   role: UserRole;
   emailVerified: boolean;
   twoFactorEnabled: boolean;
   profilePicture?: string;
   phone?: string;
   preferredCurrency: Currency;
+  /** ISO 3166-1 alpha-2 country code of the buyer (e.g. 'CA', 'US', 'GB') */
+  buyerCountry?: string;
+  /** Province/state code — required for Canada (drives tax), optional for US/GB */
+  buyerProvince?: string;
+  /** Buyer's billing street address */
+  billingStreet?: string;
+  /** Buyer's billing city */
+  billingCity?: string;
+  /** Buyer's billing postal / ZIP code */
+  billingPostalCode?: string;
   createdAt: Date;
   updatedAt: Date;
 }
