@@ -1,7 +1,7 @@
 {
-  "name": "@celebrate4me/shared",
+  "name": "@luvngift/shared",
   "version": "1.2.0",
-  "description": "Shared types, schemas, and utilities for CelebrateForMe",
+  "description": "Shared types, schemas, and utilities for Luvngift",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": ["dist"],
