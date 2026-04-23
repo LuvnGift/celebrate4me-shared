@@ -1,5 +1,12 @@
 import { Currency } from '../types';
 
+/** Maps a buyer's country code to the currency they pay in. */
+export const getUserCurrency = (buyerCountry?: string | null): 'USD' | 'GBP' | 'CAD' => {
+  if (buyerCountry === 'CA') return 'CAD';
+  if (buyerCountry === 'GB') return 'GBP';
+  return 'USD';
+};
+
 const CURRENCY_CONFIG: Record<Currency, { symbol: string; locale: string; decimals: number }> = {
   [Currency.CAD]: { symbol: 'CA$', locale: 'en-CA', decimals: 2 },
   [Currency.USD]: { symbol: '$', locale: 'en-US', decimals: 2 },

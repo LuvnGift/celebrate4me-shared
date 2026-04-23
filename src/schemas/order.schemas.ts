@@ -68,7 +68,7 @@ export const createOrderSchema = z.object({
   personalMessage: z.string().trim().max(500, 'Message must be at most 500 characters').optional(),
   specialInstructions: z.string().trim().max(500, 'Instructions must be at most 500 characters').optional(),
   preferredDeliveryDate: z.string().datetime().optional(),
-  currency: z.enum(['CAD', 'USD', 'GBP']),
+  currency: z.enum(['CAD', 'USD', 'GBP']).optional(),
 }).refine(data => data.bundleId || (data.items && data.items.length > 0), {
   message: 'Order must include either a bundle or at least one custom item',
 });
@@ -97,7 +97,7 @@ export const customOrderSchema = z.object({
   giftType: z.enum(['EXPERIENCE', 'PHYSICAL']),
   preferredDate: z.string().datetime().optional(),
   estimatedBudget: z.number().positive('Budget must be a positive number').optional(),
-  currency: z.enum(['CAD', 'USD', 'GBP']),
+  currency: z.enum(['CAD', 'USD', 'GBP']).optional(),
   description: z
     .string()
     .trim()
