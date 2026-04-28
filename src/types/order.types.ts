@@ -9,6 +9,14 @@ export interface OrderItem {
   quantity: number;
 }
 
+export interface OrderPayment {
+  id: string;
+  status: 'PENDING' | 'SUCCEEDED' | 'FAILED';
+  stripePaymentIntentId: string;
+  amount: number;
+  currency: string;
+}
+
 export interface Order {
   id: string;
   userId: string;
@@ -34,6 +42,7 @@ export interface Order {
   isFlagged: boolean;
   invoiceUrl?: string;
   items: OrderItem[];
+  payment?: OrderPayment;
   createdAt: Date;
   updatedAt: Date;
 }
