@@ -4,3 +4,4 @@ export * from './order.types';
 export * from './bundle.types';
 export * from './chat.types';
 export * from './vendor.types';
+export * from './subscription.types';

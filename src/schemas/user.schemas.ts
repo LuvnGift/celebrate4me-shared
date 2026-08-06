@@ -136,6 +136,13 @@ export const createAddressSchema = z.object({
   country: z.string().trim().default('Nigeria'),
   postalCode: postalField,
   isDefault: z.boolean().default(false),
+  /**
+   * Recipient dietary constraints — allergens and religious requirements.
+   * SAFETY, not preference: they override substitution decisions entirely.
+   * Optional so existing address forms keep working unchanged.
+   */
+  dietaryFlags: z.array(z.string().trim().min(2).max(40)).max(20).optional(),
+  dietaryNotes: z.string().trim().max(500).optional(),
 });
 
 export const updateAddressSchema = createAddressSchema.partial();
